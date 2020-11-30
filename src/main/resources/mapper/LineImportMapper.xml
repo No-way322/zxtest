@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.zxtest.mapper.LineImportMapper">
+    <update id="updateTowerInfo">
+        update tb_fly_towerinfo
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="obj_id =case" suffix="end,">
+                <foreach collection="list" item="i"  index="index">
+                        when (towerGUID=#{i.rdfid}) then #{i.assetid}
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index">
+            (towerGUID =#{i.rdfid})
+        </foreach>
+    </update>
+
+
+</mapper>
